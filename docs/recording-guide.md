@@ -25,7 +25,7 @@
    ```python
    weather_api_key = "<방금 만든 40자>"
    ```
-   - AWS 형식(`AKIA...`) 같은 실제 서비스 형식은 쓰지 않는다. GitHub 푸시 보호가 push를 막을 수 있다 [추정]. 무작위 40자는 gitleaks의 `generic-api-key` 룰에 잡힌다 ✅
+   - AWS 형식(`AKIA...`) 같은 실제 서비스 형식은 쓰지 않는다. GitHub 푸시 보호가 push를 막을 수 있다 [추정]. 무작위 40자는 푸시 보호에 막히지 않고 올라가며, CI의 gitleaks `generic-api-key` 룰에 잡힌다 ✅ (2026-11-24 리허설)
 2. **로컬 검사**: `gitleaks dir . --redact -v` → 파일·줄·룰 이름 짚기 ✅
 3. `stages/01-gitleaks.yml` 내용을 `.github/workflows/security.yml`에 붙여 넣기 → commit, push → **❌**
 4. 키를 환경변수 방식으로 되돌리고 commit, push → **그래도 ❌** ✅
@@ -44,19 +44,16 @@
    - 말할 내용: HTTPS에서 HTTP로 리다이렉트될 때 Authorization 헤더가 지워지지 않는 문제 → 인증 정보가 평문 구간으로 샐 수 있음
 3. `stages/02-trivy.yml` 내용으로 교체 → push → **❌**
    - `exit-code: "1"` 줄을 짚기: "이 줄이 없으면 취약점이 있어도 초록불입니다"
-4. `requests`를 최신 버전으로 올리고 push → **✅**
+4. `requests`를 최신 버전(2026-11-24 기준 `2.34.2`, HIGH 이상 0건 ✅)으로 올리고 push → **✅** ✅
 5. Actions 실행 결과 페이지에서 `sbom` artifact를 내려받아 열어 보기 → "내 프로그램의 부품 명세서"
    - 로컬에서 보여주려면: `trivy fs --format cyclonedx --output sbom.cdx.json .`
 
 ## 시연 3: 태그 바꿔치기 재현 (약 4분), 하이라이트
 
 ### 준비 (녹화 전)
-```
-cd tag-demo-action
-git tag v1
-git push origin v1
-git rev-parse v1      # ← 이 40자리가 "원래 커밋 SHA". 메모해 둔다
-```
+- `v1` 태그는 이미 push 완료 (2026-11-24). **원래 커밋 SHA = `0febd20e66e0121230eda75bc7bb3bea0bd33ba0`**
+- 태그로 호출하면 `✅ 정상 코드입니다` 출력 확인 ✅ (리허설)
+- 리허설 등으로 태그를 이미 옮겼다면 원상복구: `git tag -f v1 0febd20 && git push -f origin v1`
 본 저장소에 `stages/demo-tag.yml`을 `.github/workflows/tag-demo.yml`로 복사해 push
 
 ### 녹화
