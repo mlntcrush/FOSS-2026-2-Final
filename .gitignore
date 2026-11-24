@@ -1,0 +1,20 @@
+# 동영상은 절대 저장소에 올리지 않는다 (교수님 공지: 업로드 시 감점)
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+
+# 비밀값
+.env
+*.pem
+
+# 파이썬
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 스캔 산출물 (SBOM은 CI artifact로 보관)
+sbom*.json
+trivy-*.json

@@ -1,0 +1,14 @@
+# [0단계] 녹화 시작 시점의 워크플로: 아직 보안 검사 없음.
+# 녹화 중에 stages/ 폴더의 파일 내용으로 차례대로 교체한다.
+name: security
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: echo "GitHub Actions가 동작합니다. 아직 보안 검사는 없습니다."

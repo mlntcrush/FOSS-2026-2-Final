@@ -1,0 +1,21 @@
+# [시연 3] 태그 바꿔치기 재현용 워크플로
+# 사용법: 이 파일을 .github/workflows/tag-demo.yml 로 복사하고 push한 뒤
+#         Actions 탭에서 "Run workflow" 버튼으로 수동 실행한다.
+name: tag-demo
+
+on:
+  workflow_dispatch: # 수동 실행만
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      # (가) 태그로 호출: 태그가 옮겨지면 실행되는 코드도 바뀐다
+      - uses: mlntcrush/tag-demo-action@v1
+
+      # (나) 해결: 위 줄을 지우고 아래 줄의 주석을 풀어 커밋 SHA로 고정한다
+      #      <SHA> 자리에는 v1의 "원래" 커밋 SHA 40자리를 넣는다
+      # - uses: mlntcrush/tag-demo-action@<SHA> # v1
