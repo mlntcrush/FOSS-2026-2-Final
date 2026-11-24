@@ -34,6 +34,7 @@ stages/02-trivy.yml            2단계: + Trivy, SBOM
 stages/03-pinned.yml           3단계(최종): 커밋 SHA 고정 + 최소 권한
 stages/demo-tag.yml            태그 바꿔치기 재현용 (tag-demo-action 저장소와 함께 사용)
 docs/recording-guide.md        시연 절차와 명령
+docs/script.md                 영상 대본·가이드라인·설명
 slides/                        강의 PPTX
 ```
 
